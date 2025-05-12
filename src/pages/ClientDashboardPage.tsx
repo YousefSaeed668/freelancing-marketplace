@@ -3,13 +3,14 @@ import { useTheme } from '../context/ThemeContext';
 import { 
   LayoutDashboard, Briefcase, MessageSquare, Wallet, Settings, Search,
   TrendingUp, Clock, CheckCircle, DollarSign, Bell, ChevronRight,
-  FileText, User, ExternalLink, Download,Eye
+  FileText, User, ExternalLink, Download, Eye, Plus,
+  Star
 } from 'lucide-react';
 
-type DashboardSection = 'overview' | 'projects' | 'messages' | 'earnings' | 'settings';
-type ProjectsTab = 'active' | 'proposals' | 'completed';
+type DashboardSection = 'overview' | 'projects' | 'messages' | 'billing' | 'settings';
+type ProjectsTab = 'active' | 'posted' | 'completed';
 
-const FreelancerDashboardPage: React.FC = () => {
+const ClientDashboardPage: React.FC = () => {
   const { theme } = useTheme();
   const [activeSection, setActiveSection] = useState<DashboardSection>('overview');
   const [activeProjectsTab, setActiveProjectsTab] = useState<ProjectsTab>('active');
@@ -23,53 +24,64 @@ const FreelancerDashboardPage: React.FC = () => {
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-3xl font-bold font-cairo mb-2">
-                  مرحباً، أحمد!
+                  مرحباً، شركة الأناقة!
                 </h1>
                 <p className="text-medium-grey dark:text-cool-grey">
-                  آخر تسجيل دخول: اليوم، 09:30 صباحاً
+                  آخر تسجيل دخول: اليوم، 10:15 صباحاً
                 </p>
               </div>
-              <button className={`
-                p-2 rounded-full relative
-                ${theme === 'light' 
-                  ? 'hover:bg-gray-100' 
-                  : 'hover:bg-gray-700'}
-              `}>
-                <Bell size={24} />
-                <span className={`
-                  absolute top-0 right-0 w-3 h-3 rounded-full
+              <div className="flex gap-3">
+                <button className={`
+                  px-6 py-2 rounded-md text-white
                   ${theme === 'light' 
-                    ? 'bg-professional-blue' 
-                    : 'bg-muted-gold'}
-                `}></span>
-              </button>
+                    ? 'bg-professional-blue hover:bg-blue-700' 
+                    : 'bg-deep-ocean-blue hover:bg-blue-900'}
+                `}>
+                  <Plus className="inline-block ml-2" size={18} />
+                  نشر مشروع جديد
+                </button>
+                <button className={`
+                  p-2 rounded-full relative
+                  ${theme === 'light' 
+                    ? 'hover:bg-gray-100' 
+                    : 'hover:bg-gray-700'}
+                `}>
+                  <Bell size={24} />
+                  <span className={`
+                    absolute top-0 right-0 w-3 h-3 rounded-full
+                    ${theme === 'light' 
+                      ? 'bg-professional-blue' 
+                      : 'bg-muted-gold'}
+                  `}></span>
+                </button>
+              </div>
             </div>
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <StatCard 
                 title="المشاريع النشطة"
-                value="3"
+                value="5"
                 icon={<Briefcase size={24} />}
-                trend="+1 هذا الأسبوع"
+                trend="+2 هذا الشهر"
               />
               <StatCard 
-                title="العروض المقدمة"
-                value="8"
-                icon={<FileText size={24} />}
-                trend="5 في انتظار الرد"
+                title="المشاريع المكتملة"
+                value="12"
+                icon={<CheckCircle size={24} />}
+                trend="98% نسبة الرضا"
               />
               <StatCard 
-                title="إجمالي الأرباح"
-                value="$12,450"
+                title="إجمالي الإنفاق"
+                value="$15,750"
                 icon={<DollarSign size={24} />}
-                trend="+$2,300 هذا الشهر"
+                trend="+$3,200 هذا الشهر"
               />
               <StatCard 
-                title="الرصيد الحالي"
-                value="$3,200"
-                icon={<Wallet size={24} />}
-                trend="متاح للسحب"
+                title="العروض المستلمة"
+                value="28"
+                icon={<FileText size={24} />}
+                trend="8 عروض جديدة"
               />
             </div>
 
@@ -81,21 +93,21 @@ const FreelancerDashboardPage: React.FC = () => {
               <h2 className="text-xl font-bold font-cairo mb-6">النشاط الأخير</h2>
               <div className="space-y-4">
                 <ActivityItem 
-                  icon={<MessageSquare size={20} />}
-                  title="رسالة جديدة من سارة أحمد"
-                  description="بخصوص مشروع تصميم الموقع"
-                  time="منذ 30 دقيقة"
-                />
-                <ActivityItem 
-                  icon={<Eye size={20} />}
-                  title="تم مشاهدة عرضك"
-                  description="مشروع تطوير تطبيق الجوال"
-                  time="منذ ساعتين"
+                  icon={<FileText size={20} />}
+                  title="عرض جديد على مشروع تصميم الموقع"
+                  description="من أحمد محمد"
+                  time="منذ 15 دقيقة"
                 />
                 <ActivityItem 
                   icon={<CheckCircle size={20} />}
-                  title="تم قبول العرض"
-                  description="مشروع تصميم الهوية البصرية"
+                  title="اكتمل مشروع تصميم الهوية البصرية"
+                  description="مع سارة أحمد"
+                  time="منذ ساعتين"
+                />
+                <ActivityItem 
+                  icon={<DollarSign size={20} />}
+                  title="تم دفع مستحقات المشروع"
+                  description="2,500$ - مشروع تطوير التطبيق"
                   time="منذ 3 ساعات"
                 />
               </div>
@@ -110,19 +122,19 @@ const FreelancerDashboardPage: React.FC = () => {
                 <h2 className="text-xl font-bold font-cairo mb-6">روابط سريعة</h2>
                 <div className="space-y-3">
                   <QuickLink 
-                    icon={<User size={20} />}
-                    title="عرض الملف الشخصي"
-                    subtitle="تحديث المعلومات والمهارات"
+                    icon={<Plus size={20} />}
+                    title="نشر مشروع جديد"
+                    subtitle="اعثر على أفضل المستقلين لمشروعك"
                   />
                   <QuickLink 
                     icon={<Search size={20} />}
-                    title="البحث عن مشاريع"
-                    subtitle="تصفح أحدث الفرص المتاحة"
+                    title="تصفح المستقلين"
+                    subtitle="ابحث عن مواهب جديدة"
                   />
                   <QuickLink 
                     icon={<Download size={20} />}
-                    title="تحميل التقارير"
-                    subtitle="إحصائيات وتقارير الأداء"
+                    title="تحميل الفواتير"
+                    subtitle="سجل المدفوعات والفواتير"
                   />
                 </div>
               </div>
@@ -131,19 +143,19 @@ const FreelancerDashboardPage: React.FC = () => {
                 rounded-lg p-6
                 ${theme === 'light' ? 'bg-white shadow-sm' : 'bg-gray-800'}
               `}>
-                <h2 className="text-xl font-bold font-cairo mb-6">إحصائيات الملف</h2>
+                <h2 className="text-xl font-bold font-cairo mb-6">المستقلون الموصى بهم</h2>
                 <div className="space-y-4">
-                  <ProfileStat 
-                    label="نسبة إكمال الملف"
-                    value={85}
+                  <FreelancerCard 
+                    name="أحمد محمد"
+                    title="مصمم UI/UX"
+                    rating={4.9}
+                    image="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg"
                   />
-                  <ProfileStat 
-                    label="معدل قبول العروض"
-                    value={70}
-                  />
-                  <ProfileStat 
-                    label="تقييم العملاء"
-                    value={95}
+                  <FreelancerCard 
+                    name="سارة أحمد"
+                    title="مطورة ويب"
+                    rating={4.8}
+                    image="https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg"
                   />
                 </div>
               </div>
@@ -174,10 +186,10 @@ const FreelancerDashboardPage: React.FC = () => {
                   النشطة
                 </button>
                 <button 
-                  onClick={() => setActiveProjectsTab('proposals')}
+                  onClick={() => setActiveProjectsTab('posted')}
                   className={`
                     px-4 py-2 rounded-md
-                    ${activeProjectsTab === 'proposals'
+                    ${activeProjectsTab === 'posted'
                       ? theme === 'light'
                         ? 'bg-professional-blue text-white'
                         : 'bg-deep-ocean-blue text-white'
@@ -187,7 +199,7 @@ const FreelancerDashboardPage: React.FC = () => {
                     }
                   `}
                 >
-                  العروض المقدمة
+                  المنشورة
                 </button>
                 <button 
                   onClick={() => setActiveProjectsTab('completed')}
@@ -209,113 +221,99 @@ const FreelancerDashboardPage: React.FC = () => {
             </div>
 
             <div className="space-y-4">
-              {/* Project Cards would go here based on activeProjectsTab */}
               <ProjectCard 
                 title="تصميم موقع إلكتروني"
-                client="شركة الأناقة للأزياء"
+                freelancer="أحمد محمد"
                 status="جاري العمل"
                 progress={60}
                 dueDate="15 مارس 2024"
                 budget="$2,500"
+                proposals={12}
               />
               <ProjectCard 
                 title="تطوير تطبيق موبايل"
-                client="تك سوليوشنز"
+                freelancer="سارة أحمد"
                 status="في انتظار المراجعة"
                 progress={90}
                 dueDate="20 مارس 2024"
                 budget="$4,000"
+                proposals={8}
               />
             </div>
           </div>
         );
 
-      case 'earnings':
+      case 'billing':
         return (
           <div>
-            <h1 className="text-3xl font-bold font-cairo mb-8">الأرباح والمدفوعات</h1>
+            <h1 className="text-3xl font-bold font-cairo mb-8">المدفوعات والفواتير</h1>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2">
-                {/* Earnings Chart */}
+                {/* Payment History */}
                 <div className={`
                   rounded-lg p-6 mb-8
                   ${theme === 'light' ? 'bg-white shadow-sm' : 'bg-gray-800'}
                 `}>
-                  <h2 className="text-xl font-bold font-cairo mb-6">إحصائيات الأرباح</h2>
-                  {/* Chart would go here */}
-                  <div className="h-64 flex items-center justify-center border border-dashed rounded">
-                    رسم بياني الأرباح
+                  <h2 className="text-xl font-bold font-cairo mb-6">سجل المدفوعات</h2>
+                  <div className="space-y-4">
+                    <PaymentItem 
+                      title="مشروع تصميم الموقع"
+                      amount="2,500"
+                      date="15 مارس 2024"
+                      status="مكتمل"
+                      freelancer="أحمد محمد"
+                    />
+                    <PaymentItem 
+                      title="مشروع تطوير التطبيق"
+                      amount="1,800"
+                      date="10 مارس 2024"
+                      status="معلق"
+                      freelancer="سارة أحمد"
+                    />
                   </div>
                 </div>
 
-                {/* Transactions */}
+                {/* Invoices */}
                 <div className={`
                   rounded-lg p-6
                   ${theme === 'light' ? 'bg-white shadow-sm' : 'bg-gray-800'}
                 `}>
-                  <h2 className="text-xl font-bold font-cairo mb-6">سجل المعاملات</h2>
+                  <h2 className="text-xl font-bold font-cairo mb-6">الفواتير</h2>
                   <div className="space-y-4">
-                    <TransactionItem 
-                      title="دفعة مشروع تصميم الموقع"
+                    <InvoiceItem 
+                      number="INV-2024-001"
                       amount="2,500"
                       date="15 مارس 2024"
-                      status="مكتمل"
+                      project="تصميم الموقع"
                     />
-                    <TransactionItem 
-                      title="دفعة مشروع تطوير التطبيق"
+                    <InvoiceItem 
+                      number="INV-2024-002"
                       amount="1,800"
                       date="10 مارس 2024"
-                      status="معلق"
-                    />
-                    <TransactionItem 
-                      title="سحب إلى البنك"
-                      amount="3,000"
-                      date="5 مارس 2024"
-                      status="مكتمل"
-                      type="withdrawal"
+                      project="تطوير التطبيق"
                     />
                   </div>
                 </div>
               </div>
 
               <div>
-                {/* Balance Card */}
-                <div className={`
-                  rounded-lg p-6 mb-8
-                  ${theme === 'light' ? 'bg-white shadow-sm' : 'bg-gray-800'}
-                `}>
-                  <h2 className="text-xl font-bold font-cairo mb-4">الرصيد الحالي</h2>
-                  <div className="text-3xl font-bold mb-4">$3,200</div>
-                  <button className={`
-                    w-full py-3 rounded-md text-white mb-4
-                    ${theme === 'light'
-                      ? 'bg-professional-blue hover:bg-blue-700'
-                      : 'bg-deep-ocean-blue hover:bg-blue-900'}
-                  `}>
-                    سحب الأموال
-                  </button>
-                  <p className="text-sm text-medium-grey dark:text-cool-grey">
-                    يتم معالجة عمليات السحب خلال 2-3 أيام عمل
-                  </p>
-                </div>
-
                 {/* Payment Methods */}
                 <div className={`
-                  rounded-lg p-6
+                  rounded-lg p-6 mb-8
                   ${theme === 'light' ? 'bg-white shadow-sm' : 'bg-gray-800'}
                 `}>
                   <h2 className="text-xl font-bold font-cairo mb-6">طرق الدفع</h2>
                   <div className="space-y-4">
                     <PaymentMethodCard 
-                      type="bank"
-                      name="البنك الأهلي"
+                      type="card"
+                      name="فيزا"
                       number="****4582"
                     />
                     <PaymentMethodCard 
-                      type="paypal"
-                      name="PayPal"
-                      email="ahmed@example.com"
+                      type="bank"
+                      name="البنك الأهلي"
+                      number="****7891"
                     />
                   </div>
                   <button className={`
@@ -326,6 +324,28 @@ const FreelancerDashboardPage: React.FC = () => {
                   `}>
                     إضافة طريقة دفع
                   </button>
+                </div>
+
+                {/* Billing Summary */}
+                <div className={`
+                  rounded-lg p-6
+                  ${theme === 'light' ? 'bg-white shadow-sm' : 'bg-gray-800'}
+                `}>
+                  <h2 className="text-xl font-bold font-cairo mb-4">ملخص الفواتير</h2>
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between">
+                      <span>المشاريع النشطة</span>
+                      <span>$4,300</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>المشاريع المكتملة</span>
+                      <span>$11,450</span>
+                    </div>
+                    <div className="flex justify-between font-bold pt-2 border-t">
+                      <span>الإجمالي</span>
+                      <span>$15,750</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -368,9 +388,9 @@ const FreelancerDashboardPage: React.FC = () => {
                 />
                 <NavItem 
                   icon={<Wallet size={20} />}
-                  label="الأرباح"
-                  active={activeSection === 'earnings'}
-                  onClick={() => setActiveSection('earnings')}
+                  label="المدفوعات"
+                  active={activeSection === 'billing'}
+                  onClick={() => setActiveSection('billing')}
                 />
                 <NavItem 
                   icon={<Settings size={20} />}
@@ -514,33 +534,30 @@ const QuickLink: React.FC<QuickLinkProps> = ({ icon, title, subtitle }) => {
   );
 };
 
-interface ProfileStatProps {
-  label: string;
-  value: number;
+interface FreelancerCardProps {
+  name: string;
+  title: string;
+  rating: number;
+  image: string;
 }
 
-const ProfileStat: React.FC<ProfileStatProps> = ({ label, value }) => {
+const FreelancerCard: React.FC<FreelancerCardProps> = ({ name, title, rating, image }) => {
   const { theme } = useTheme();
   
   return (
-    <div>
-      <div className="flex justify-between mb-2">
-        <span>{label}</span>
-        <span>{value}%</span>
+    <div className="flex items-center gap-4">
+      <img 
+        src={image} 
+        alt={name}
+        className="w-12 h-12 rounded-full object-cover"
+      />
+      <div className="flex-1">
+        <h4 className="font-medium">{name}</h4>
+        <p className="text-sm text-medium-grey dark:text-cool-grey">{title}</p>
       </div>
-      <div className={`
-        h-2 rounded-full overflow-hidden
-        ${theme === 'light' ? 'bg-gray-100' : 'bg-gray-700'}
-      `}>
-        <div 
-          className={`
-            h-full rounded-full
-            ${theme === 'light' 
-              ? 'bg-professional-blue' 
-              : 'bg-deep-ocean-blue'}
-          `}
-          style={{ width: `${value}%` }}
-        />
+      <div className="flex items-center">
+        <Star size={16} className="text-yellow-400 fill-current" />
+        <span className="ml-1">{rating}</span>
       </div>
     </div>
   );
@@ -548,15 +565,16 @@ const ProfileStat: React.FC<ProfileStatProps> = ({ label, value }) => {
 
 interface ProjectCardProps {
   title: string;
-  client: string;
+  freelancer: string;
   status: string;
   progress: number;
   dueDate: string;
   budget: string;
+  proposals: number;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ 
-  title, client, status, progress, dueDate, budget 
+  title, freelancer, status, progress, dueDate, budget, proposals 
 }) => {
   const { theme } = useTheme();
   
@@ -568,7 +586,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="text-xl font-bold mb-1">{title}</h3>
-          <p className="text-medium-grey dark:text-cool-grey">{client}</p>
+          <p className="text-medium-grey dark:text-cool-grey">{freelancer}</p>
         </div>
         <span className={`
           px-3 py-1 rounded-full text-sm
@@ -610,21 +628,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           <DollarSign size={16} className="ml-1" />
           {budget}
         </div>
+        <div className="flex items-center">
+          <Eye size={16} className="ml-1" />
+          {proposals} عرض
+        </div>
       </div>
     </div>
   );
 };
 
-interface TransactionItemProps {
+interface PaymentItemProps {
   title: string;
   amount: string;
   date: string;
-  status: 'مكتمل' | 'معلق';
-  type?: 'payment' | 'withdrawal';
+  status: string;
+  freelancer: string;
 }
 
-const TransactionItem: React.FC<TransactionItemProps> = ({ 
-  title, amount, date, status, type = 'payment' 
+const PaymentItem: React.FC<PaymentItemProps> = ({ 
+  title, amount, date, status, freelancer 
 }) => {
   const { theme } = useTheme();
   
@@ -632,15 +654,12 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
     <div className="flex items-center justify-between p-4 border-b last:border-0">
       <div>
         <h4 className="font-medium mb-1">{title}</h4>
-        <p className="text-sm text-medium-grey dark:text-cool-grey">{date}</p>
+        <p className="text-sm text-medium-grey dark:text-cool-grey">
+          {freelancer}
+        </p>
       </div>
       <div className="text-left">
-        <p className={`
-          font-bold mb-1
-          ${type === 'withdrawal' ? 'text-red-500' : ''}
-        `}>
-          {type === 'withdrawal' ? '-' : '+'}{amount}$
-        </p>
+        <p className="font-bold mb-1">{amount}$</p>
         <span className={`
           text-sm px-2 py-1 rounded-full
           ${status === 'مكتمل'
@@ -659,15 +678,52 @@ const TransactionItem: React.FC<TransactionItemProps> = ({
   );
 };
 
+interface InvoiceItemProps {
+  number: string;
+  amount: string;
+  date: string;
+  project: string;
+}
+
+const InvoiceItem: React.FC<InvoiceItemProps> = ({ 
+  number, amount, date, project 
+}) => {
+  const { theme } = useTheme();
+  
+  return (
+    <div className="flex items-center justify-between p-4 border-b last:border-0">
+      <div>
+        <h4 className="font-medium mb-1">{number}</h4>
+        <p className="text-sm text-medium-grey dark:text-cool-grey">
+          {project}
+        </p>
+      </div>
+      <div className="text-left">
+        <p className="font-bold mb-1">{amount}$</p>
+        <p className="text-sm text-medium-grey dark:text-cool-grey">
+          {date}
+        </p>
+      </div>
+      <button className={`
+        p-2 rounded-full
+        ${theme === 'light' 
+          ? 'hover:bg-gray-100' 
+          : 'hover:bg-gray-700'}
+      `}>
+        <Download size={20} />
+      </button>
+    </div>
+  );
+};
+
 interface PaymentMethodCardProps {
-  type: 'bank' | 'paypal';
+  type: 'card' | 'bank';
   name: string;
-  number?: string;
-  email?: string;
+  number: string;
 }
 
 const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({ 
-  type, name, number, email 
+  type, name, number 
 }) => {
   const { theme } = useTheme();
   
@@ -684,14 +740,14 @@ const PaymentMethodCard: React.FC<PaymentMethodCardProps> = ({
             ? 'bg-blue-50 text-professional-blue'
             : 'bg-gray-700 text-muted-gold'}
         `}>
-          {type === 'bank' ? 'حساب بنكي' : 'PayPal'}
+          {type === 'card' ? 'بطاقة ائتمان' : 'حساب بنكي'}
         </span>
       </div>
       <p className="text-sm text-medium-grey dark:text-cool-grey">
-        {type === 'bank' ? number : email}
+        {number}
       </p>
     </div>
   );
 };
 
-export default FreelancerDashboardPage;
+export default ClientDashboardPage;
